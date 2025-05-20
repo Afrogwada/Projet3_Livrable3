@@ -48,6 +48,7 @@
             tools:text="Restaurant Indien" />
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -86,6 +87,7 @@
 
         </com.google.android.material.chip.ChipGroup>
 
+        <!-- Colonne 1 : Note globale -->
         <LinearLayout
             android:id="@+id/rate"
             android:layout_width="0dp"
@@ -97,6 +99,7 @@
             app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
             app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName">
 
+            <!-- Note globale (ex: 4.0) -->
             <TextView
                 android:id="@+id/text_note"
                 android:layout_width="wrap_content"
@@ -106,6 +109,7 @@
                 android:textSize="22sp"
                  />
 
+            <!-- Notation étoilée -->
             <RatingBar
                 android:id="@+id/rating_bar"
                 style="@android:style/Widget.DeviceDefault.RatingBar.Small"
@@ -119,6 +123,7 @@
                 android:scaleY="0.75"
                 android:stepSize="0.5" />
 
+            <!-- Nombre d'avis (ex: 257) -->
             <TextView
                 android:id="@+id/text_nb_avis"
                 android:layout_width="wrap_content"
@@ -128,6 +133,46 @@
                 android:textSize="10sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="500dp"
+            android:layout_height="50dp"
+            android:orientation="vertical"
+
+            android:paddingLeft="30dp"
+            app:layout_constraintEnd_toEndOf="@+id/chipGroup"
+            app:layout_constraintTop_toTopOf="@+id/rate">
+
+            <!-- Note 5 -->
+            <ProgressBar
+                style="@style/App.ProgressBarRating"
+                android:layout_weight="1"
+                android:progress="80" />
+
+            <!-- Note 4 -->
+            <ProgressBar
+                style="@style/App.ProgressBarRating"
+
+                android:layout_weight="1"
+                android:progress="60" />
+
+            <!-- Note 3 -->
+            <ProgressBar
+                style="@style/App.ProgressBarRating"
+                android:layout_weight="1"
+                android:progress="40" />
+
+            <!-- Note 2 -->
+            <ProgressBar
+                style="@style/App.ProgressBarRating"
+                android:layout_weight="1"
+                android:progress="20" />
+
+            <!-- Note 1 -->
+            <ProgressBar
+                style="@style/App.ProgressBarRating"
+                android:layout_weight="1"
+                android:progress="10" />
+        </LinearLayout>
         <View
             android:id="@+id/separator"
             android:layout_width="0dp"

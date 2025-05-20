@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="App.ProgressBarRating" parent="android:Widget.ProgressBar.Horizontal">
+        <item name="android:layout_height">8dp</item>
+        <item name="android:paddingTop">7dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:progressTint">@color/star_yellow</item>
+        <item name="android:max">100</item>
+    </style>
+</resources>
