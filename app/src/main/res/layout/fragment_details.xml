@@ -86,6 +86,48 @@
 
         </com.google.android.material.chip.ChipGroup>
 
+        <LinearLayout
+            android:id="@+id/rate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/separator"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName">
+
+            <TextView
+                android:id="@+id/text_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.0"
+                android:textColor="@color/grey_dark"
+                android:textSize="22sp"
+                 />
+
+            <RatingBar
+                android:id="@+id/rating_bar"
+                style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="@color/star_yellow"
+                android:rating="4.0"
+                android:scaleX="0.75"
+                android:scaleY="0.75"
+                android:stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/text_nb_avis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_dark"
+                android:text="(257)"
+                android:textSize="10sp" />
+        </LinearLayout>
+
         <View
             android:id="@+id/separator"
             android:layout_width="0dp"
@@ -94,10 +136,10 @@
             android:layout_marginTop="20dp"
 
             android:background="#DADADA"
-            app:layout_constraintBottom_toTopOf="@+id/tvRestaurantHours"
+            app:layout_constraintBottom_toTopOf="@+id/rate"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvRestaurantName" />
+            app:layout_constraintTop_toBottomOf="@id/rate" />
 
         <ImageView
             android:id="@+id/icon_hours"
