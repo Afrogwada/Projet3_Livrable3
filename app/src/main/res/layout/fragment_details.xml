@@ -27,9 +27,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/jakarta_bold"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@id/tvRestaurantType"
             app:layout_constraintTop_toBottomOf="@id/tvRestaurantType"
             tools:text="Taj Mahal" />
@@ -106,8 +106,7 @@
                 android:layout_height="wrap_content"
                 android:text="4.0"
                 android:textColor="@color/grey_dark"
-                android:textSize="22sp"
-                 />
+                android:textSize="22sp" />
 
             <!-- Notation étoilée -->
             <RatingBar
@@ -128,16 +127,17 @@
                 android:id="@+id/text_nb_avis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/grey_dark"
                 android:text="(257)"
+                android:textColor="@color/grey_dark"
                 android:textSize="10sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout2"
             android:layout_width="500dp"
             android:layout_height="50dp"
-            android:orientation="vertical"
 
+            android:orientation="vertical"
             android:paddingLeft="30dp"
             app:layout_constraintEnd_toEndOf="@+id/chipGroup"
             app:layout_constraintTop_toTopOf="@+id/rate">
@@ -173,6 +173,22 @@
                 android:layout_weight="1"
                 android:progress="10" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/texteCliquable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:text="@string/new_review"
+            android:textColor="@color/grey_dark"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/separator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
         <View
             android:id="@+id/separator"
             android:layout_width="0dp"

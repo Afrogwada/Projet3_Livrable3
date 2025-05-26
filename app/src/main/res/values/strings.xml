@@ -21,8 +21,10 @@
     <string name="icone_weekday">Icone weekday</string>
     <string name="icone_website">Icone website</string>
     <string name="phone_icon">Phone icon</string>
+    <string name="new_review">Leave a review</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 
 </resources>
