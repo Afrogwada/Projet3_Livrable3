@@ -2,11 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <category android:name="android.intent.category.BROWSABLE" />
+
             <data android:scheme="https" />
         </intent>
         <intent>
@@ -14,13 +17,14 @@
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <data android:scheme="geo" />
         </intent>
     </queries>
 
     <application
-        android:allowBackup="true"
         android:name=".TajMahalApplication"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/ic_launcher"
@@ -28,22 +32,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TajMahal"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.MainActivity"
+            android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.TajMahal"
-            android:exported="true">
+            android:theme="@style/Theme.TajMahal">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- Nouvelle activité ReviewActivity -->
+        </activity> <!-- Nouvelle activité ReviewActivity -->
         <activity
             android:name=".ui.restaurant.ReviewActivity"
-            android:theme="@style/Theme.TajMahal"
-            android:exported="false" />
+            android:exported="true"
+            android:theme="@style/Theme.TajMahal">
+
+        </activity>
     </application>
 
 </manifest>

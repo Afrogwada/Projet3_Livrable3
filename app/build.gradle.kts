@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.openclassrooms.tajmahal"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.openclassrooms.tajmahal"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -39,6 +39,7 @@ android {
 
 dependencies {
     implementation("androidx.work:work-runtime:2.8.1")
+    implementation("androidx.activity:activity:1.10.1")
     val hiltVersion = "2.44"
 
     //Hilt

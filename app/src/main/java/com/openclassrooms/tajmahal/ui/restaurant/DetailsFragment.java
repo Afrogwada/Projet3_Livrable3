@@ -69,6 +69,7 @@ public class DetailsFragment extends Fragment {
         TextView newAvisTextView = view.findViewById(R.id.NewAvis);
         newAvisTextView.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), ReviewActivity.class);
+            intent.putExtra("restaurant_name", "Taj Mahal");
             startActivity(intent);
         });
     }
