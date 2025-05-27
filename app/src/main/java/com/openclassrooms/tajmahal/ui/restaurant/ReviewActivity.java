@@ -1,8 +1,11 @@
 package com.openclassrooms.tajmahal.ui.restaurant;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
 //import androidx.activity.EdgeToEdge;
 import androidx.appcompat.widget.Toolbar;
@@ -32,8 +35,12 @@ public class ReviewActivity extends AppCompatActivity {
             String restaurantName = getIntent().getStringExtra("restaurant_name");
             getSupportActionBar().setTitle(restaurantName);
         }
-
-
+        /*ImageView userPhoto = findViewById(R.id.user_photo);
+        String imageUrl = "https://www.figma.com/design/qj6JYHASYVk5HIqJOpy6ld/Restaurant?node-id=62-1135&t=OJPnaTdfIfE2gh7X-4";
+        Glide.with(this)        // 'this' est l'Activity
+                .load(imageUrl)
+                .circleCrop()      // pour rendre l'image ronde (optionnel)
+                .into(userPhoto);*/
     }
 
     @Override
