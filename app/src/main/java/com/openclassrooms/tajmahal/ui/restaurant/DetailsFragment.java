@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.openclassrooms.tajmahal.R;
@@ -63,6 +64,13 @@ public class DetailsFragment extends Fragment {
         setupUI(); // Sets up user interface components.
         setupViewModel(); // Prepares the ViewModel for the fragment.
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
+
+        // Clique sur "NewAvis" ouvre ReviewActivity
+        TextView newAvisTextView = view.findViewById(R.id.NewAvis);
+        newAvisTextView.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), ReviewActivity.class);
+            startActivity(intent);
+        });
     }
 
     /**

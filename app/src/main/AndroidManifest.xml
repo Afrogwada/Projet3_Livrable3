@@ -39,6 +39,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Nouvelle activité ReviewActivity -->
+        <activity
+            android:name=".ui.restaurant.ReviewActivity"
+            android:theme="@style/Theme.TajMahal"
+            android:exported="false" />
     </application>
 
 </manifest>
