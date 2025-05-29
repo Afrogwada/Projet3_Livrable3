@@ -7,13 +7,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.R;
+import com.openclassrooms.tajmahal.data.service.RestaurantApi;
+import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
+import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.domain.model.ReviewAdapter;
 //import androidx.activity.EdgeToEdge;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
 
 public class ReviewActivity extends AppCompatActivity {
+    private RecyclerView recyclerView;
+    private List<Review> reviews;
+    private ReviewAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,20 @@ public class ReviewActivity extends AppCompatActivity {
                 .load(imageUrl)
                 .circleCrop()      // pour rendre l'image ronde (optionnel)
                 .into(userPhoto);*/
+
+        // Référencer le RecyclerView
+        recyclerView = findViewById(R.id.review_list);
+
+        // Récupérer les données (depuis le FakeApi)
+        RestaurantApi api = new RestaurantFakeApi();
+        reviews = api.getReviews();
+
+        // Créer l'adapter
+        adapter = new ReviewAdapter(reviews);
+
+        // Associer LayoutManager + Adapter
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
