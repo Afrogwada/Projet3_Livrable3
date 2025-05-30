@@ -36,12 +36,12 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <!-- Photo utilisateur -->
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/user_photo"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="16dp"
-                android:clipToOutline="true"
+                app:shapeAppearanceOverlay="@style/RoundedImage"
                 android:scaleType="centerCrop"
                 android:src="@drawable/currentuser_picture" />
 
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Manon Garcia"
-                    android:textSize="12sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <RatingBar
@@ -111,6 +111,16 @@
             android:background="@android:drawable/edit_text"
             app:layout_constraintStart_toStartOf="@+id/user_review_block"
             app:layout_constraintTop_toBottomOf="@+id/user_review_block" />
+        <View
+            android:id="@+id/new_review_separator"
+            android:layout_width="0dp"
+            android:layout_height="0.75dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#DADADA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/user_comment" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/review_list"
@@ -118,6 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:nestedScrollingEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/new_review_separator"
             android:overScrollMode="never"/>
 
 
