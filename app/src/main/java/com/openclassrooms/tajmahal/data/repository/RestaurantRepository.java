@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,6 +31,9 @@ public class RestaurantRepository {
     // The API interface instance that will be used for network requests related to restaurant data.
     private final RestaurantApi restaurantApi;
 
+    // MutableLiveData that holds the list of reviews and allows updates
+    private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>();
+
     /**
      * Constructs a new instance of {@link RestaurantRepository} with the given {@link RestaurantApi}.
      *
@@ -35,6 +42,11 @@ public class RestaurantRepository {
     @Inject
     public RestaurantRepository(RestaurantApi restaurantApi) {
         this.restaurantApi = restaurantApi;
+
+        // Initialiser la MutableLiveData avec la liste actuelle des reviews depuis l'API
+        // On crée une nouvelle ArrayList pour pouvoir modifier la liste sans affecter l'originale
+        List<Review> initialReviews = new ArrayList<>(restaurantApi.getReviews());
+        reviewsLiveData.setValue(initialReviews);
     }
 
     /**
@@ -51,4 +63,26 @@ public class RestaurantRepository {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
     }
 
+    /**
+     * Returns a LiveData wrapping the list of reviews.
+     *
+     * @return LiveData containing the list of reviews.
+     */
+    public LiveData<List<Review>> getReviews() {
+        return reviewsLiveData;
+    }
+
+    /**
+     * Adds a new review to the list and updates the LiveData.
+     *
+     * @param review The new review to add.
+     */
+    public void addReview(Review review) {
+        List<Review> currentReviews = reviewsLiveData.getValue();
+        if (currentReviews != null) {
+            currentReviews.add(0, review); // Ajout en tête de liste
+            reviewsLiveData.setValue(currentReviews); // Notifie les observateurs
+        }
+
+    }
 }

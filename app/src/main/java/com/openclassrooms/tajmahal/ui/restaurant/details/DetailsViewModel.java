@@ -1,4 +1,4 @@
-package com.openclassrooms.tajmahal.ui.restaurant;
+package com.openclassrooms.tajmahal.ui.restaurant.details;
 
 import android.content.Context;
 

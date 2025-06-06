@@ -1,4 +1,4 @@
-package com.openclassrooms.tajmahal.ui.restaurant;
+package com.openclassrooms.tajmahal.ui.restaurant.details;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.ui.restaurant.review.ReviewActivity;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

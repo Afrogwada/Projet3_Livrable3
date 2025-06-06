@@ -1,0 +1,58 @@
+package com.openclassrooms.tajmahal.ui.restaurant.review;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+
+import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
+import com.openclassrooms.tajmahal.domain.model.Review;
+
+import java.util.List;
+
+/**
+ * ViewModel pour gérer les données liées aux avis (reviews) d’un restaurant.
+ *
+ * Il agit comme une couche entre le repository qui fournit les données et l’interface utilisateur.
+ * Le ViewModel expose les données sous forme de LiveData afin que la UI puisse observer
+ * les changements et se mettre à jour automatiquement.
+ *
+ */
+public class ReviewViewModel extends ViewModel {
+
+    // Référence vers le repository pour accéder aux données de restaurant et reviews
+    private final RestaurantRepository restaurantRepository;
+
+    /**
+     * Constructeur du ViewModel.
+     *
+     * @param repository Instance du RestaurantRepository pour récupérer et modifier les avis.
+     */
+    public ReviewViewModel(RestaurantRepository repository) {
+        this.restaurantRepository = repository;
+    }
+
+    /**
+     * Retourne la liste des avis sous forme de LiveData observable.
+     *
+     * La UI peut observer cet objet LiveData pour recevoir les mises à jour automatiques
+     * lorsque la liste des avis change (exemple : ajout d’un nouvel avis).
+     *
+     *
+     * @return LiveData contenant la liste des avis.
+     */
+    public LiveData<List<Review>> getReviews() {
+        return restaurantRepository.getReviews();
+    }
+
+    /**
+     * Ajoute un nouvel avis via le repository.
+     *
+     * Cette méthode déclenche une modification des données qui mettra à jour automatiquement
+     * la LiveData observée par la UI.
+     *
+     *
+     * @param review L’objet Review représentant le nouvel avis à ajouter.
+     */
+    public void addReview(Review review) {
+        restaurantRepository.addReview(review);
+    }
+}
