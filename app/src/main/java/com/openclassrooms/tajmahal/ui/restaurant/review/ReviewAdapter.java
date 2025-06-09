@@ -18,6 +18,8 @@ import com.openclassrooms.tajmahal.domain.model.Review;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.net.Uri;
+
 /**
  * Adapter RecyclerView pour afficher une liste d'avis (Review).
  * <p>
@@ -62,9 +64,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         // Charge l'image de l'utilisateur avec Glide (avec placeholder)
         String imageSource = review.getPicture();
+
         if (imageSource.startsWith("http")) {
             Glide.with(holder.imageView.getContext())
                     .load(imageSource)
+                    .placeholder(R.mipmap.ic_user_placeholder)
+                    .into(holder.imageView);
+        } else if (imageSource.startsWith("content://") || imageSource.startsWith("file://")) {
+            Glide.with(holder.imageView.getContext())
+                    .load(Uri.parse(imageSource))
                     .placeholder(R.mipmap.ic_user_placeholder)
                     .into(holder.imageView);
         } else {
@@ -82,6 +90,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             }
         }
     }
+
 
     @Override
     public int getItemCount() {

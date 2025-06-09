@@ -1,5 +1,7 @@
 package com.openclassrooms.tajmahal.ui.restaurant.review;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
@@ -35,6 +38,9 @@ public class ReviewActivity extends AppCompatActivity {
     private ReviewViewModel reviewViewModel;
     private RecyclerView recyclerView;
     private ReviewAdapter adapter;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private Uri selectedImageUri = null; // Pour stocker l'image sélectionnée
+    private ShapeableImageView userPhoto;
 
 
     private void setupViewModel() {
@@ -65,6 +71,7 @@ public class ReviewActivity extends AppCompatActivity {
         EditText userNameInput = findViewById(R.id.user_name);
         RatingBar ratingBar = findViewById(R.id.rating_bar);
         Chip validateButton = findViewById(R.id.valid_new_avis);
+        userPhoto = findViewById(R.id.user_photo);
 
 
 
@@ -84,11 +91,28 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
+
+
+        // Gestion du clic sur l'image utilisateur
+        userPhoto.setOnClickListener(v -> openImageChooser());
+
+//        userPhoto.setOnClickListener(v -> {
+//            // Alterne entre deux images locales pour simuler un choix
+//            if (selectedPhotoResId == R.drawable.currentuser_picture) {
+//                selectedPhotoResId = R.drawable.profile_alternative; // ajoute une autre image dans res/drawable
+//            } else {
+//                selectedPhotoResId = R.drawable.currentuser_picture;
+//            }
+//            userPhoto.setImageResource(selectedPhotoResId);
+//        });
+
         // Gestion du clic sur le bouton pour ajouter un nouvel avis
         validateButton.setOnClickListener(v -> {
             String comment = commentInput.getText().toString().trim();
             String userName;
             int rating = (int) ratingBar.getRating();
+
+
 
             // Vérifications simples pour éviter avis vide ou note nulle
             if (comment.isEmpty()) {
@@ -104,11 +128,12 @@ public class ReviewActivity extends AppCompatActivity {
                 Toast.makeText(this, "Veuillez attribuer une note.", Toast.LENGTH_SHORT).show();
                 return;
             }
+            String photoString = selectedImageUri != null ? selectedImageUri.toString() : String.valueOf(R.drawable.currentuser_picture);
 
             // Création d’un nouvel avis avec données fictives pour l’auteur et photo
             Review newReview = new Review(
                     userName,
-                    String.valueOf(R.drawable.currentuser_picture),
+                    photoString,
                     comment,
                     rating
             );
@@ -135,5 +160,24 @@ public class ReviewActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    // sélecteur d'image pour l'utilisateur
+    private void openImageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Choisir une image"), PICK_IMAGE_REQUEST);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedImageUri = data.getData();
+            userPhoto.setImageURI(selectedImageUri);
+        }
+
+
     }
 }
