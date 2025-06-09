@@ -62,6 +62,7 @@ public class ReviewActivity extends AppCompatActivity {
         // Initialisation des vues
         recyclerView = findViewById(R.id.review_list);
         EditText commentInput = findViewById(R.id.user_comment);
+        EditText userNameInput = findViewById(R.id.user_name);
         RatingBar ratingBar = findViewById(R.id.rating_bar);
         Chip validateButton = findViewById(R.id.valid_new_avis);
 
@@ -86,12 +87,18 @@ public class ReviewActivity extends AppCompatActivity {
         // Gestion du clic sur le bouton pour ajouter un nouvel avis
         validateButton.setOnClickListener(v -> {
             String comment = commentInput.getText().toString().trim();
+            String userName;
             int rating = (int) ratingBar.getRating();
 
             // Vérifications simples pour éviter avis vide ou note nulle
             if (comment.isEmpty()) {
                 Toast.makeText(this, "Veuillez écrire un commentaire.", Toast.LENGTH_SHORT).show();
                 return;
+            }
+            if (userNameInput.getText().toString().trim().isEmpty()) {
+                userName="Anonyme";
+            } else {
+                 userName= userNameInput.getText().toString().trim();
             }
             if (rating == 0) {
                 Toast.makeText(this, "Veuillez attribuer une note.", Toast.LENGTH_SHORT).show();
@@ -100,7 +107,7 @@ public class ReviewActivity extends AppCompatActivity {
 
             // Création d’un nouvel avis avec données fictives pour l’auteur et photo
             Review newReview = new Review(
-                    "Manon Garcia",
+                    userName,
                     String.valueOf(R.drawable.currentuser_picture),
                     comment,
                     rating
