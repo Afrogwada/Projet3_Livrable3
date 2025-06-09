@@ -61,10 +61,26 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         holder.ratingBar.setRating(review.getRate());
 
         // Charge l'image de l'utilisateur avec Glide (avec placeholder)
-        Glide.with(holder.imageView.getContext())
-                .load(review.getPicture())
-                .placeholder(R.mipmap.ic_user_placeholder)
-                .into(holder.imageView);
+        String imageSource = review.getPicture();
+        if (imageSource.startsWith("http")) {
+            Glide.with(holder.imageView.getContext())
+                    .load(imageSource)
+                    .placeholder(R.mipmap.ic_user_placeholder)
+                    .into(holder.imageView);
+        } else {
+            try {
+                int resId = Integer.parseInt(imageSource);
+                Glide.with(holder.imageView.getContext())
+                        .load(resId)
+                        .placeholder(R.mipmap.ic_user_placeholder)
+                        .into(holder.imageView);
+            } catch (NumberFormatException e) {
+                // Fallback si image invalide
+                Glide.with(holder.imageView.getContext())
+                        .load(R.mipmap.ic_user_placeholder)
+                        .into(holder.imageView);
+            }
+        }
     }
 
     @Override

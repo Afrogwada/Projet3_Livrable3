@@ -101,7 +101,7 @@ public class ReviewActivity extends AppCompatActivity {
             // Création d’un nouvel avis avec données fictives pour l’auteur et photo
             Review newReview = new Review(
                     "Manon Garcia",
-                    "@drawable/currentuser_picture",
+                    String.valueOf(R.drawable.currentuser_picture),
                     comment,
                     rating
             );
