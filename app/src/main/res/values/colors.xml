@@ -5,4 +5,6 @@
     <color name="red">#CF2F2F</color>
     <color name="star_yellow">#FFB800</color>
     <color name="grey_dark">#666666</color>
+    <color name="grey_back">#DADADA</color>
+
 </resources>

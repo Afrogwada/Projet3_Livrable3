@@ -46,6 +46,7 @@ public class ReviewActivity extends AppCompatActivity {
     private void setupViewModel() {
         reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +75,6 @@ public class ReviewActivity extends AppCompatActivity {
         userPhoto = findViewById(R.id.user_photo);
 
 
-
-
         // Configuration du RecyclerView avec un LayoutManager vertical
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -92,19 +91,8 @@ public class ReviewActivity extends AppCompatActivity {
         });
 
 
-
         // Gestion du clic sur l'image utilisateur
         userPhoto.setOnClickListener(v -> openImageChooser());
-
-//        userPhoto.setOnClickListener(v -> {
-//            // Alterne entre deux images locales pour simuler un choix
-//            if (selectedPhotoResId == R.drawable.currentuser_picture) {
-//                selectedPhotoResId = R.drawable.profile_alternative; // ajoute une autre image dans res/drawable
-//            } else {
-//                selectedPhotoResId = R.drawable.currentuser_picture;
-//            }
-//            userPhoto.setImageResource(selectedPhotoResId);
-//        });
 
         // Gestion du clic sur le bouton pour ajouter un nouvel avis
         validateButton.setOnClickListener(v -> {
@@ -113,22 +101,21 @@ public class ReviewActivity extends AppCompatActivity {
             int rating = (int) ratingBar.getRating();
 
 
-
             // Vérifications simples pour éviter avis vide ou note nulle
             if (comment.isEmpty()) {
                 Toast.makeText(this, "Veuillez écrire un commentaire.", Toast.LENGTH_SHORT).show();
                 return;
             }
             if (userNameInput.getText().toString().trim().isEmpty()) {
-                userName="Anonyme";
+                userName = "Anonyme";
             } else {
-                 userName= userNameInput.getText().toString().trim();
+                userName = userNameInput.getText().toString().trim();
             }
             if (rating == 0) {
                 Toast.makeText(this, "Veuillez attribuer une note.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            String photoString = selectedImageUri != null ? selectedImageUri.toString() : String.valueOf(R.drawable.currentuser_picture);
+            String photoString = selectedImageUri != null ? selectedImageUri.toString() : String.valueOf(R.mipmap.ic_user_placeholder);
 
             // Création d’un nouvel avis avec données fictives pour l’auteur et photo
             Review newReview = new Review(
@@ -170,6 +157,7 @@ public class ReviewActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Choisir une image"), PICK_IMAGE_REQUEST);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

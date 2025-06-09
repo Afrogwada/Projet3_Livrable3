@@ -47,7 +47,7 @@ public class DetailsFragment extends Fragment {
      * It's used to perform one-time initialization.
      *
      * @param savedInstanceState A bundle containing previously saved instance state.
-     * If the fragment is being re-created from a previous saved state, this is the state.
+     *                           If the fragment is being re-created from a previous saved state, this is the state.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,9 +58,9 @@ public class DetailsFragment extends Fragment {
      * This method is called immediately after `onCreateView()`.
      * Use this method to perform final initialization once the fragment views have been inflated.
      *
-     * @param view The View returned by `onCreateView()`.
+     * @param view               The View returned by `onCreateView()`.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
+     *                           from a previous saved state as given here.
      */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class DetailsFragment extends Fragment {
 
         // Calcul du pourcentage et mise à jour des ProgressBar
         int[] progressBarValues = new int[5];
-        progressBarValues=detailsViewModel.updateRatingDistribution(reviews);
+        progressBarValues = detailsViewModel.updateRatingDistribution(reviews);
         binding.Note1.setProgress(progressBarValues[0]);
         binding.Note2.setProgress(progressBarValues[1]);
         binding.Note3.setProgress(progressBarValues[2]);
@@ -104,11 +104,11 @@ public class DetailsFragment extends Fragment {
     /**
      * Creates and returns the view hierarchy associated with the fragment.
      *
-     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
-     * @param container If non-null, this is the parent view that the fragment's UI should be attached to.
-     * The fragment should not add the view itself but return it.
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          If non-null, this is the parent view that the fragment's UI should be attached to.
+     *                           The fragment should not add the view itself but return it.
      * @param savedInstanceState If non-null, this fragment is being re-constructed
-     * from a previous saved state as given here.
+     *                           from a previous saved state as given here.
      * @return Returns the View for the fragment's UI, or null.
      */
     @Override

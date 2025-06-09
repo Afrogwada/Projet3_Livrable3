@@ -45,7 +45,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/currentuser_picture" />
+                android:src="@mipmap/ic_user_placeholder" />
 
 
             <!-- Nom + Étoiles -->
@@ -57,6 +57,8 @@
 
                 <EditText
                     android:id="@+id/user_name"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/grey_dark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
@@ -111,7 +113,7 @@
             android:padding="20dp"
             android:layout_margin="20dp"
             android:textSize="20sp"
-            android:textColor="@color/black"
+            android:textColor="@color/grey_dark"
             android:background="@android:drawable/edit_text"
             app:layout_constraintStart_toStartOf="@+id/user_review_block"
             app:layout_constraintTop_toBottomOf="@+id/user_review_block" />
@@ -128,6 +130,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/review_list"
+            android:textColor="@color/grey_dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

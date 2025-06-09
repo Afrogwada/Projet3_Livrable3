@@ -14,11 +14,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 
 /**
  * ViewModel pour gérer les données liées aux avis (reviews) d’un restaurant.
- *
+ * <p>
  * Il agit comme une couche entre le repository qui fournit les données et l’interface utilisateur.
  * Le ViewModel expose les données sous forme de LiveData afin que la UI puisse observer
  * les changements et se mettre à jour automatiquement.
- *
  */
 @HiltViewModel
 public class ReviewViewModel extends ViewModel {
@@ -38,10 +37,9 @@ public class ReviewViewModel extends ViewModel {
 
     /**
      * Retourne la liste des avis sous forme de LiveData observable.
-     *
+     * <p>
      * La UI peut observer cet objet LiveData pour recevoir les mises à jour automatiques
      * lorsque la liste des avis change (exemple : ajout d’un nouvel avis).
-     *
      *
      * @return LiveData contenant la liste des avis.
      */
@@ -51,10 +49,9 @@ public class ReviewViewModel extends ViewModel {
 
     /**
      * Ajoute un nouvel avis via le repository.
-     *
+     * <p>
      * Cette méthode déclenche une modification des données qui mettra à jour automatiquement
      * la LiveData observée par la UI.
-     *
      *
      * @param review L’objet Review représentant le nouvel avis à ajouter.
      */

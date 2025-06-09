@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 
 /**
- ViewModelFactory sert à personnaliser la création de ViewModel.
- On la crée quand le ViewModel a un constructeur avec paramètres.
- Elle est généralement dans le même package que le ViewModel.
- On l’utilise dans l’Activity ou le Fragment pour récupérer une instance du ViewModel correctement construite.
+ * ViewModelFactory sert à personnaliser la création de ViewModel.
+ * On la crée quand le ViewModel a un constructeur avec paramètres.
+ * Elle est généralement dans le même package que le ViewModel.
+ * On l’utilise dans l’Activity ou le Fragment pour récupérer une instance du ViewModel correctement construite.
  */
 public class ReviewViewModelFactory implements ViewModelProvider.Factory {
 

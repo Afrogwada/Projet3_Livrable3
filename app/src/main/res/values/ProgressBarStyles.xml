@@ -6,6 +6,7 @@
         <item name="android:paddingTop">7dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:progressTint">@color/star_yellow</item>
+        <item name="android:progressBackgroundTint">@color/grey_back</item>
         <item name="android:max">100</item>
     </style>
 </resources>
