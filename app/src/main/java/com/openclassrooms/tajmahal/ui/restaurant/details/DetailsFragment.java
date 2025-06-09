@@ -90,6 +90,15 @@ public class DetailsFragment extends Fragment {
         binding.ratingBar.setRating(detailsViewModel.calculateAverageRating(reviews));
         binding.textNbAvis.setText("(" + reviews.size() + " avis)");
 
+        // Calcul du pourcentage et mise à jour des ProgressBar
+        int[] progressBarValues = new int[5];
+        progressBarValues=detailsViewModel.updateRatingDistribution(reviews);
+        binding.Note1.setProgress(progressBarValues[0]);
+        binding.Note2.setProgress(progressBarValues[1]);
+        binding.Note3.setProgress(progressBarValues[2]);
+        binding.Note4.setProgress(progressBarValues[3]);
+        binding.Note5.setProgress(progressBarValues[4]);
+
     }
 
     /**

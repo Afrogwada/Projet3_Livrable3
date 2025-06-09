@@ -144,31 +144,35 @@
 
             <!-- Note 5 -->
             <ProgressBar
+                android:id="@+id/Note_5"
                 style="@style/App.ProgressBarRating"
                 android:layout_weight="1"
                 android:progress="80" />
 
             <!-- Note 4 -->
             <ProgressBar
+                android:id="@+id/Note_4"
                 style="@style/App.ProgressBarRating"
-
                 android:layout_weight="1"
                 android:progress="60" />
 
             <!-- Note 3 -->
             <ProgressBar
+                android:id="@+id/Note_3"
                 style="@style/App.ProgressBarRating"
                 android:layout_weight="1"
                 android:progress="40" />
 
             <!-- Note 2 -->
             <ProgressBar
+                android:id="@+id/Note_2"
                 style="@style/App.ProgressBarRating"
                 android:layout_weight="1"
                 android:progress="20" />
 
             <!-- Note 1 -->
             <ProgressBar
+                android:id="@+id/Note_1"
                 style="@style/App.ProgressBarRating"
                 android:layout_weight="1"
                 android:progress="10" />

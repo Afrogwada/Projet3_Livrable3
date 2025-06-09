@@ -21,7 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  * MainViewModel is responsible for preparing and managing the data for the {@link DetailsFragment}.
  * It communicates with the {@link RestaurantRepository} to fetch restaurant details and provides
  * utility methods related to the restaurant UI.
- *
+ * <p>
  * This ViewModel is integrated with Hilt for dependency injection.
  */
 @HiltViewModel
@@ -47,6 +47,7 @@ public class DetailsViewModel extends ViewModel {
     public LiveData<Restaurant> getTajMahalRestaurant() {
         return restaurantRepository.getRestaurant();
     }
+
     public LiveData<List<Review>> getTajMahalReviews() {
         return restaurantRepository.getReviews();
     }
@@ -88,20 +89,10 @@ public class DetailsViewModel extends ViewModel {
         }
         return dayString;
     }
-    /**public String calculateAverageRating(List<Review> reviews) {
-        if (reviews == null || reviews.isEmpty()) {
-            return "0.0";
-        }
-        int sum = 0;
-        for (Review review : reviews) {
-            sum += review.getRate();
-        }
 
-        float average = (float) sum / reviews.size();
-
-        // Retourne une chaîne formatée avec 1 chiffre après la virgule
-        return String.format("%.1f", average);
-    }*/
+    /**
+     * Calcul de la moyenne des notes
+     */
     public float calculateAverageRating(List<Review> reviews) {
         if (reviews == null || reviews.isEmpty()) {
             return 0.0f;
@@ -115,6 +106,32 @@ public class DetailsViewModel extends ViewModel {
 
         // Arrondi à 1 chiffre après la virgule
         return Math.round(average * 10f) / 10f;
+    }
+
+    /**
+     * Compter les avis par note (1 à 5)
+     */
+    public int[] updateRatingDistribution(List<Review> reviews) {
+        int[] counts = new int[5]; // index 0 = note 1, ..., index 4 = note 5
+        for (Review review : reviews) {
+            int rate = review.getRate();
+            if (rate >= 1 && rate <= 5) {
+                counts[rate - 1]++;
+            }
+        }
+
+        int totalReviews = reviews.size();
+        int[] percentages = new int[5];
+
+        if (totalReviews == 0) {
+            return percentages; // tout à 0
+        }
+
+        for (int i = 0; i < 5; i++) {
+            percentages[i] = (counts[i] * 100) / totalReviews;
+        }
+
+        return percentages;
     }
 
 }
