@@ -20,7 +20,10 @@ import android.widget.Toast;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
 import com.openclassrooms.tajmahal.ui.restaurant.review.ReviewActivity;
+
+import java.util.List;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -65,6 +68,7 @@ public class DetailsFragment extends Fragment {
         setupUI(); // Sets up user interface components.
         setupViewModel(); // Prepares the ViewModel for the fragment.
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
+        detailsViewModel.getTajMahalReviews().observe(requireActivity(), this::updateUIWithReviews); // Observes changes in the restaurant data and updates the UI accordingly.
 
         // Clique sur "NewAvis" ouvre ReviewActivity
         TextView newAvisTextView = view.findViewById(R.id.NewAvis);
@@ -73,6 +77,19 @@ public class DetailsFragment extends Fragment {
             intent.putExtra("restaurant_name", "Taj Mahal");
             startActivity(intent);
         });
+    }
+
+    private void updateUIWithReviews(List<Review> reviews) {
+        if (reviews == null || reviews.isEmpty()) {
+            binding.textNote.setText("0.0");
+            binding.ratingBar.setRating(0f);
+            binding.textNbAvis.setText("(0 avis)");
+            return;
+        }
+        binding.textNote.setText(String.format("%.1f", detailsViewModel.calculateAverageRating(reviews)).replace(',', '.'));
+        binding.ratingBar.setRating(detailsViewModel.calculateAverageRating(reviews));
+        binding.textNbAvis.setText("(" + reviews.size() + " avis)");
+
     }
 
     /**
@@ -124,6 +141,7 @@ public class DetailsFragment extends Fragment {
         binding.tvRestaurantHours.setText(restaurant.getHours());
         binding.tvRestaurantAddress.setText(restaurant.getAddress());
         binding.tvRestaurantWebsite.setText(restaurant.getWebsite());
+
         binding.tvRestaurantPhoneNumber.setText(restaurant.getPhoneNumber());
         binding.chipOnPremise.setVisibility(restaurant.isDineIn() ? View.VISIBLE : View.GONE);
         binding.chipTakeAway.setVisibility(restaurant.isTakeAway() ? View.VISIBLE : View.GONE);

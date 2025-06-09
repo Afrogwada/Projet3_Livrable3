@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModel;
 import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
 
 import javax.inject.Inject;
 
 import java.util.Calendar;
+import java.util.List;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
@@ -44,6 +46,9 @@ public class DetailsViewModel extends ViewModel {
      */
     public LiveData<Restaurant> getTajMahalRestaurant() {
         return restaurantRepository.getRestaurant();
+    }
+    public LiveData<List<Review>> getTajMahalReviews() {
+        return restaurantRepository.getReviews();
     }
 
     /**
@@ -82,6 +87,34 @@ public class DetailsViewModel extends ViewModel {
                 dayString = "";
         }
         return dayString;
+    }
+    /**public String calculateAverageRating(List<Review> reviews) {
+        if (reviews == null || reviews.isEmpty()) {
+            return "0.0";
+        }
+        int sum = 0;
+        for (Review review : reviews) {
+            sum += review.getRate();
+        }
+
+        float average = (float) sum / reviews.size();
+
+        // Retourne une chaîne formatée avec 1 chiffre après la virgule
+        return String.format("%.1f", average);
+    }*/
+    public float calculateAverageRating(List<Review> reviews) {
+        if (reviews == null || reviews.isEmpty()) {
+            return 0.0f;
+        }
+        int sum = 0;
+        for (Review review : reviews) {
+            sum += review.getRate();
+        }
+
+        float average = (float) sum / reviews.size();
+
+        // Arrondi à 1 chiffre après la virgule
+        return Math.round(average * 10f) / 10f;
     }
 
 }

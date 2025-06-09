@@ -17,8 +17,11 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
 import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.ui.restaurant.details.DetailsViewModel;
 
 import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Activité affichant la liste des avis et permettant d’en ajouter.
@@ -26,17 +29,22 @@ import java.util.List;
  * Intègre le ViewModel {@link ReviewViewModel} via {@link ReviewViewModelFactory} pour gérer les données.
  * </p>
  */
+@AndroidEntryPoint
 public class ReviewActivity extends AppCompatActivity {
 
     private ReviewViewModel reviewViewModel;
     private RecyclerView recyclerView;
     private ReviewAdapter adapter;
 
+
+    private void setupViewModel() {
+        reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
-
+        setupViewModel();
         // Configuration de la barre d’outils (Toolbar)
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,14 +65,8 @@ public class ReviewActivity extends AppCompatActivity {
         RatingBar ratingBar = findViewById(R.id.rating_bar);
         Chip validateButton = findViewById(R.id.valid_new_avis);
 
-        // Création du repository (ici, une instance FakeApi pour la démo)
-        RestaurantRepository repository = new RestaurantRepository(new RestaurantFakeApi());
 
-        // Création de la factory pour le ViewModel, avec injection du repository
-        ReviewViewModelFactory factory = new ReviewViewModelFactory(repository);
 
-        // Obtention du ViewModel via la factory
-        reviewViewModel = new ViewModelProvider(this, factory).get(ReviewViewModel.class);
 
         // Configuration du RecyclerView avec un LayoutManager vertical
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

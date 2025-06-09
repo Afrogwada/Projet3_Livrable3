@@ -8,6 +8,10 @@ import com.openclassrooms.tajmahal.domain.model.Review;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.lifecycle.HiltViewModel;
+
 /**
  * ViewModel pour gérer les données liées aux avis (reviews) d’un restaurant.
  *
@@ -16,6 +20,7 @@ import java.util.List;
  * les changements et se mettre à jour automatiquement.
  *
  */
+@HiltViewModel
 public class ReviewViewModel extends ViewModel {
 
     // Référence vers le repository pour accéder aux données de restaurant et reviews
@@ -26,6 +31,7 @@ public class ReviewViewModel extends ViewModel {
      *
      * @param repository Instance du RestaurantRepository pour récupérer et modifier les avis.
      */
+    @Inject
     public ReviewViewModel(RestaurantRepository repository) {
         this.restaurantRepository = repository;
     }
