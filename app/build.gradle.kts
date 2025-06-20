@@ -51,10 +51,14 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.work:work-runtime:2.8.1")
     implementation("androidx.core:core-splashscreen:1.0.0")
-
+// JUnit 4
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // Mockito (core + support annotations)
+    testImplementation ("org.mockito:mockito-core:5.2.0")
+    testImplementation ("org.mockito:mockito-inline:5.2.0")
+    testImplementation ("androidx.arch.core:core-testing:2.2.0")
 
     implementation ("com.github.bumptech.glide:glide:4.15.1")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.15.1")
