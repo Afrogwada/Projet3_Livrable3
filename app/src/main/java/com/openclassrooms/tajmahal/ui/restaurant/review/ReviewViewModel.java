@@ -1,6 +1,9 @@
 package com.openclassrooms.tajmahal.ui.restaurant.review;
 
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
@@ -21,7 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  */
 @HiltViewModel
 public class ReviewViewModel extends ViewModel {
-
+    public MutableLiveData<String> errorNewReview = new MutableLiveData<>();
     // Référence vers le repository pour accéder aux données de restaurant et reviews
     private final RestaurantRepository restaurantRepository;
 
@@ -56,6 +59,15 @@ public class ReviewViewModel extends ViewModel {
      * @param review L’objet Review représentant le nouvel avis à ajouter.
      */
     public void addReview(Review review) {
-        restaurantRepository.addReview(review);
+        if (review.getUsername().trim().isEmpty()) {
+            review.setUsername("Anonyme");
+        }
+        if (review.getComment().isEmpty()) {
+            errorNewReview.setValue("Veuillez écrire un commentaire.");
+        } else if (review.getRate() == 0) {
+            errorNewReview.setValue("Veuillez attribuer une note.");
+        } else {
+            restaurantRepository.addReview(review);
+        }
     }
 }

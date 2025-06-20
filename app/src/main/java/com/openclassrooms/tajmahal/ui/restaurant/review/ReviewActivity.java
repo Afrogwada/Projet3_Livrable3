@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,7 +49,14 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setupViewModel();
-
+        reviewViewModel.errorNewReview.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String message) {
+                if (message != null) {
+                    Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         // Configuration de la barre d’outils (Toolbar)
         Toolbar toolbar = binding.toolbar;
         setSupportActionBar(toolbar);
@@ -81,26 +90,18 @@ public class ReviewActivity extends AppCompatActivity {
 
         // Clic sur bouton pour valider un nouvel avis
         binding.validNewAvis.setOnClickListener(v -> {
+            // extraire les tests dans le view model
+            // appeler la fonction dans le view model (getrating, get comment, getusername)
             String comment = binding.userComment.getText().toString().trim();
-            String userName;
+            String userName= binding.userName.getText().toString().trim();
             int rating = (int) binding.ratingBar.getRating();
 
-            if (comment.isEmpty()) {
-                Toast.makeText(this, "Veuillez écrire un commentaire.", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (binding.userName.getText().toString().trim().isEmpty()) {
-                userName = "Anonyme";
-            } else {
-                userName = binding.userName.getText().toString().trim();
-            }
-            if (rating == 0) {
-                Toast.makeText(this, "Veuillez attribuer une note.", Toast.LENGTH_SHORT).show();
-                return;
-            }
             String photoString = selectedImageUri != null ? selectedImageUri.toString() : String.valueOf(R.mipmap.ic_user_placeholder);
 
             Review newReview = new Review(userName, photoString, comment, rating);
+
+
+
             reviewViewModel.addReview(newReview);
 
             binding.userComment.setText("");
