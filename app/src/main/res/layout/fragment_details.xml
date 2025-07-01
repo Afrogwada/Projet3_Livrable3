@@ -134,13 +134,14 @@
 
         <LinearLayout
             android:id="@+id/linearLayout2"
-            android:layout_width="650dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
 
             android:orientation="vertical"
             android:paddingLeft="30dp"
-            app:layout_constraintEnd_toEndOf="@+id/chipGroup"
-            app:layout_constraintTop_toTopOf="@+id/rate">
+            app:layout_constraintStart_toEndOf="@id/rate"
+            app:layout_constraintEnd_toEndOf="@id/chipGroup"
+            app:layout_constraintTop_toTopOf="@id/rate">
 
             <!-- Note 5 -->
             <ProgressBar
