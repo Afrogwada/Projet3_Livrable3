@@ -89,10 +89,34 @@ public class ReviewViewModelTest {
 
     }
 
-    @Test // test qu'un avis n'est jammais ajouté avec un auteur vide
+    @Test // test qu'un avis n'est jamais ajouté avec un auteur vide (nom vide remplacé par défaut )
     public void addReview_withEmptyAuthor_shouldReplaceEmptyBeforeCallRepository_AndShouldAddToLiveData() {
         // Crée un avis invalide : nom vide
         Review invalidReview = new Review("", "photo.jpg", "Bon", 4);
+
+        // Appelle la méthode
+        testReviewViewModel.addReview(invalidReview);
+
+        // Capture l'avis envoyé au repository
+        ArgumentCaptor<Review> captor = ArgumentCaptor.forClass(Review.class);
+        verify(restaurantRepository).addReview(captor.capture());
+
+        Review sentReview = captor.getValue();
+
+        // Vérifie que l'auteur a été remplacé et n'est plus vide
+        assertNotNull(sentReview.getUsername());
+        assertFalse(sentReview.getUsername().trim().isEmpty());
+
+        // Vérifie qu'il a bien été ajouté dans la LiveData
+        List<Review> reviews = testReviewViewModel.getReviews().getValue();
+        assertNotNull(reviews);
+
+    }
+
+    @Test // test qu'un avis n'est jamais ajouté avec un auteur null (nom null remplacé par défaut )
+    public void addReview_withNullAuthor_shouldReplaceEmptyBeforeCallRepository_AndShouldAddToLiveData() {
+        // Crée un avis invalide : nom vide
+        Review invalidReview = new Review(null, "photo.jpg", "Bon", 4);
 
         // Appelle la méthode
         testReviewViewModel.addReview(invalidReview);

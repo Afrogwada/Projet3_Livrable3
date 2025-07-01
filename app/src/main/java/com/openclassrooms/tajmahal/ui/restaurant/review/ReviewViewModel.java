@@ -59,7 +59,7 @@ public class ReviewViewModel extends ViewModel {
      * @param review L’objet Review représentant le nouvel avis à ajouter.
      */
     public void addReview(Review review) {
-        if (review.getUsername().trim().isEmpty()) {
+        if (review.getUsername() == null || review.getUsername().trim().isEmpty()) {
             review.setUsername("Anonyme");
         }
         if (review.getComment().isEmpty()) {
