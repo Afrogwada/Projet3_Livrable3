@@ -29,6 +29,14 @@ import java.util.List;
 
 /**
  * Test unitaire de ReviewViewModel.
+ * 1. test qu'un avis valide est bien ajouté en tête de liste
+ * 2. test qu'un avis n'est jamais ajouté avec un auteur vide (nom vide remplacé par défaut )
+ * 3. test qu'un avis n'est jamais ajouté avec un auteur null (nom null remplacé par défaut )
+ * 4. test qu'un avis n'est jamais ajouté avec un commentaire null
+ * 5. test qu'un avis n'est jamais ajouté avec un commentaire vide
+ * 6. test qu'un avis n'est jamais ajouté avec une note à 0
+ * 7. test qu'un avis n'est jamais ajouté avec une note supérieure à 5
+ * 8. test qu'un avis null n'est jamais ajouté
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ReviewViewModelTest {
@@ -66,14 +74,14 @@ public class ReviewViewModelTest {
 
     }
 
-    @Test //1. test que le repository est appelé avec un review valide et que cet avis est bien ajouté.
+    @Test //1. test qu'un avis valide est bien ajouté en tête de liste
     public void addReview1_shouldCallRepositoryAddReviewAndShouldAddToLiveData() {
         // Création nouvel avis
         Review newReview = new Review("Toto", "photo2.jpg", "Très bon restaurant", 4);
 
         //simule ce que ferait le Repository (ajouter l'avis dans la liste)
         List<Review> updatedReviews = new ArrayList<>(initialReviews);
-        updatedReviews.add(newReview);
+        updatedReviews.add(0,newReview);// ajout en tête de liste
         testReviewsLiveData.setValue(updatedReviews); // simulate DB update
 
         //Appelle la méthode
@@ -82,9 +90,10 @@ public class ReviewViewModelTest {
         //Vérifie que le repository a bien été appelé
         verify(restaurantRepository).addReview(newReview);
 
-        //Vérifie que l’avis est bien dans la LiveData
+        // Vérifie que l’avis est bien en tête de la LiveData
         List<Review> finalReviews = testReviewViewModel.getReviews().getValue();
-        assertTrue(finalReviews.contains(newReview));
+        assertTrue(finalReviews.contains(newReview)); // vérifie qu'il y a bien un nouveau commentaire
+        assertEquals(newReview, finalReviews.get(0));  // vérifie qu'il est en tête
         assertEquals(2, finalReviews.size()); // 1 initial + 1 ajouté
 
     }
@@ -138,7 +147,7 @@ public class ReviewViewModelTest {
     }
 
     @Test //4. test qu'un avis n'est jamais ajouté avec un commentaire null
-    public void addReview3_withNullComment_shouldNotCallRepository_AndShouldNotAddToLiveData() {
+    public void addReview4_withNullComment_shouldNotCallRepository_AndShouldNotAddToLiveData() {
         // Crée un avis invalide : commentaire null
         Review invalidReview = new Review("Michu", "photo.jpg", null, 4);
 
@@ -155,7 +164,7 @@ public class ReviewViewModelTest {
     }
 
     @Test //5. test qu'un avis n'est jamais ajouté avec un commentaire vide
-    public void addReview3_withEmptyComment_shouldNotCallRepository_AndShouldNotAddToLiveData() {
+    public void addReview5_withEmptyComment_shouldNotCallRepository_AndShouldNotAddToLiveData() {
         // Crée un avis invalide : nom vide
         Review invalidReview = new Review("Michu", "photo.jpg", "", 4);
 
@@ -168,6 +177,55 @@ public class ReviewViewModelTest {
         // Vérifie que la LiveData ne contient pas cet avis
         List<Review> currentReviews = testReviewViewModel.getReviews().getValue();
         assertTrue(currentReviews == null || !currentReviews.contains(invalidReview));
+
+    }
+
+    @Test //6. test qu'un avis n'est jamais ajouté avec une note à 0
+    public void addReview6_withLowRate_shouldNotCallRepository_AndShouldNotAddToLiveData() {
+        // Crée un avis invalide : note trop basse
+        Review invalidReview = new Review("Michu", "photo.jpg", "pas bon", 0);
+
+        // Appelle la méthode
+        testReviewViewModel.addReview(invalidReview);
+
+        // Vérifie que rien n'est envoyé au repository
+        verify(restaurantRepository, never()).addReview(any(Review.class));
+
+        // Vérifie que la LiveData ne contient pas cet avis
+        List<Review> currentReviews = testReviewViewModel.getReviews().getValue();
+        assertTrue(currentReviews == null || !currentReviews.contains(invalidReview));
+
+    }
+
+    @Test //7. test qu'un avis n'est jamais ajouté avec une note supérieure à 5
+    public void addReview7_withTowHighRate_shouldNotCallRepository_AndShouldNotAddToLiveData() {
+        // Crée un avis invalide : note trop haute
+        Review invalidReview = new Review("Michu", "photo.jpg", "pas bon", 6);
+
+        // Appelle la méthode
+        testReviewViewModel.addReview(invalidReview);
+
+        // Vérifie que rien n'est envoyé au repository
+        verify(restaurantRepository, never()).addReview(any(Review.class));
+
+        // Vérifie que la LiveData ne contient pas cet avis
+        List<Review> currentReviews = testReviewViewModel.getReviews().getValue();
+        assertTrue(currentReviews == null || !currentReviews.contains(invalidReview));
+
+    }
+
+    @Test //8. test qu'un avis null n'est jamais ajouté
+    public void addReview8_withNullReview_shouldNotCallRepository_AndShouldNotAddToLiveData() {
+
+        // Appelle la méthode avec un review null
+        testReviewViewModel.addReview(null);
+
+        // Vérifie que rien n'est envoyé au repository
+        verify(restaurantRepository, never()).addReview(any(Review.class));
+
+        // Vérifie que la LiveData ne contient pas cet avis
+        List<Review> currentReviews = testReviewViewModel.getReviews().getValue();
+        assertEquals(initialReviews, currentReviews);
 
     }
 

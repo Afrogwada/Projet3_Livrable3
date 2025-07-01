@@ -59,13 +59,16 @@ public class ReviewViewModel extends ViewModel {
      * @param review L’objet Review représentant le nouvel avis à ajouter.
      */
     public void addReview(Review review) {
+        if (review == null) {
+            return; // Ne rien faire si review est null
+        }
         if (review.getUsername() == null || review.getUsername().trim().isEmpty()) {
             review.setUsername("Anonyme");
         }
         if (review.getComment() == null || review.getComment().isEmpty()) {
             errorNewReview.setValue("Veuillez écrire un commentaire.");
-        } else if (review.getRate() == 0) {
-            errorNewReview.setValue("Veuillez attribuer une note.");
+        } else if (review.getRate() == 0 || review.getRate() > 5) {
+            errorNewReview.setValue("Veuillez attribuer une note entre 1 et 5.");
         } else {
             restaurantRepository.addReview(review);
         }
