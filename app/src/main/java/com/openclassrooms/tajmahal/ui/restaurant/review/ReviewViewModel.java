@@ -62,7 +62,7 @@ public class ReviewViewModel extends ViewModel {
         if (review.getUsername() == null || review.getUsername().trim().isEmpty()) {
             review.setUsername("Anonyme");
         }
-        if (review.getComment().isEmpty()) {
+        if (review.getComment() == null || review.getComment().isEmpty()) {
             errorNewReview.setValue("Veuillez écrire un commentaire.");
         } else if (review.getRate() == 0) {
             errorNewReview.setValue("Veuillez attribuer une note.");

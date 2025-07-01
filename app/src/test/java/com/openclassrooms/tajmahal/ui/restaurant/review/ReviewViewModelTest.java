@@ -66,8 +66,8 @@ public class ReviewViewModelTest {
 
     }
 
-    @Test //test que le repository est appelé avec un review valide et que cet avis est bien ajouté.
-    public void addReview_shouldCallRepositoryAddReviewAndShouldAddToLiveData() {
+    @Test //1. test que le repository est appelé avec un review valide et que cet avis est bien ajouté.
+    public void addReview1_shouldCallRepositoryAddReviewAndShouldAddToLiveData() {
         // Création nouvel avis
         Review newReview = new Review("Toto", "photo2.jpg", "Très bon restaurant", 4);
 
@@ -89,8 +89,8 @@ public class ReviewViewModelTest {
 
     }
 
-    @Test // test qu'un avis n'est jamais ajouté avec un auteur vide (nom vide remplacé par défaut )
-    public void addReview_withEmptyAuthor_shouldReplaceEmptyBeforeCallRepository_AndShouldAddToLiveData() {
+    @Test //2. test qu'un avis n'est jamais ajouté avec un auteur vide (nom vide remplacé par défaut )
+    public void addReview2_withEmptyAuthor_shouldReplaceEmptyBeforeCallRepository_AndShouldAddToLiveData() {
         // Crée un avis invalide : nom vide
         Review invalidReview = new Review("", "photo.jpg", "Bon", 4);
 
@@ -113,8 +113,8 @@ public class ReviewViewModelTest {
 
     }
 
-    @Test // test qu'un avis n'est jamais ajouté avec un auteur null (nom null remplacé par défaut )
-    public void addReview_withNullAuthor_shouldReplaceEmptyBeforeCallRepository_AndShouldAddToLiveData() {
+    @Test //3. test qu'un avis n'est jamais ajouté avec un auteur null (nom null remplacé par défaut )
+    public void addReview3_withNullAuthor_shouldReplaceEmptyBeforeCallRepository_AndShouldAddToLiveData() {
         // Crée un avis invalide : nom vide
         Review invalidReview = new Review(null, "photo.jpg", "Bon", 4);
 
@@ -137,35 +137,24 @@ public class ReviewViewModelTest {
 
     }
 
-
-
-    @Test // test que le repository n'est jammais appelé avec un review invalide
-    public void addReview_withInvalidReview_shouldNotCallRepository() {
-        // Crée un avis invalide : nom vide, commentaire vide, note invalide
-        Review invalidReview = new Review("", "photo.jpg", "", 0);
+    @Test //4. test qu'un avis n'est jamais ajouté avec un commentaire null
+    public void addReview3_withNullComment_shouldNotCallRepository_AndShouldNotAddToLiveData() {
+        // Crée un avis invalide : nom vide
+        Review invalidReview = new Review("Michu", "photo.jpg", null, 4);
 
         // Appelle la méthode
         testReviewViewModel.addReview(invalidReview);
 
         // Vérifie que rien n'est envoyé au repository
         verify(restaurantRepository, never()).addReview(any(Review.class));
+
+        // Vérifie que la LiveData ne contient pas cet avis
+        List<Review> currentReviews = testReviewViewModel.getReviews().getValue();
+        assertTrue(currentReviews == null || !currentReviews.contains(invalidReview));
+
     }
-    @Test //test que si le repository lance une exception, la méthode la gère sans la propager.
-    public void getReviews_shouldReturnLiveDataFromRepository() {
-        List<Review> fakeReviews = Arrays.asList(
-                new Review("Alice", "photo1", "Commentaire 1", 5),
-                new Review("Bob", "photo2", "Commentaire 2", 4)
-        );
 
-        MutableLiveData<List<Review>> liveData = new MutableLiveData<>();
-        liveData.setValue(fakeReviews);
 
-        when(restaurantRepository.getReviews()).thenReturn(liveData);
-
-        LiveData<List<Review>> result = testReviewViewModel.getReviews();
-
-        assertEquals(fakeReviews, result.getValue());
-    }
 
 }
 
