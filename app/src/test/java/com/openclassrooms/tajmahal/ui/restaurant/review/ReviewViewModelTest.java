@@ -115,7 +115,7 @@ public class ReviewViewModelTest {
 
     @Test //3. test qu'un avis n'est jamais ajouté avec un auteur null (nom null remplacé par défaut )
     public void addReview3_withNullAuthor_shouldReplaceEmptyBeforeCallRepository_AndShouldAddToLiveData() {
-        // Crée un avis invalide : nom vide
+        // Crée un avis invalide : nom null
         Review invalidReview = new Review(null, "photo.jpg", "Bon", 4);
 
         // Appelle la méthode
@@ -139,7 +139,7 @@ public class ReviewViewModelTest {
 
     @Test //4. test qu'un avis n'est jamais ajouté avec un commentaire null
     public void addReview3_withNullComment_shouldNotCallRepository_AndShouldNotAddToLiveData() {
-        // Crée un avis invalide : nom vide
+        // Crée un avis invalide : commentaire null
         Review invalidReview = new Review("Michu", "photo.jpg", null, 4);
 
         // Appelle la méthode
@@ -154,7 +154,22 @@ public class ReviewViewModelTest {
 
     }
 
+    @Test //5. test qu'un avis n'est jamais ajouté avec un commentaire vide
+    public void addReview3_withEmptyComment_shouldNotCallRepository_AndShouldNotAddToLiveData() {
+        // Crée un avis invalide : nom vide
+        Review invalidReview = new Review("Michu", "photo.jpg", "", 4);
 
+        // Appelle la méthode
+        testReviewViewModel.addReview(invalidReview);
+
+        // Vérifie que rien n'est envoyé au repository
+        verify(restaurantRepository, never()).addReview(any(Review.class));
+
+        // Vérifie que la LiveData ne contient pas cet avis
+        List<Review> currentReviews = testReviewViewModel.getReviews().getValue();
+        assertTrue(currentReviews == null || !currentReviews.contains(invalidReview));
+
+    }
 
 }
 
