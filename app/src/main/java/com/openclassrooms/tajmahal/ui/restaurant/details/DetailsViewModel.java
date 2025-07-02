@@ -3,6 +3,7 @@ package com.openclassrooms.tajmahal.ui.restaurant.details;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.R;
@@ -28,7 +29,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 public class DetailsViewModel extends ViewModel {
 
     private final RestaurantRepository restaurantRepository;
-
+    private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>();
     /**
      * Constructor that Hilt will use to create an instance of MainViewModel.
      *
@@ -37,6 +38,11 @@ public class DetailsViewModel extends ViewModel {
     @Inject
     public DetailsViewModel(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
+        reviewsLiveData.setValue(restaurantRepository.getReviews());
+    }
+
+    public void reloadReviews() {
+        reviewsLiveData.setValue(restaurantRepository.getReviews());
     }
 
     /**
@@ -49,7 +55,7 @@ public class DetailsViewModel extends ViewModel {
     }
 
     public LiveData<List<Review>> getTajMahalReviews() {
-        return restaurantRepository.getReviews();
+        return reviewsLiveData;
     }
 
     /**

@@ -24,10 +24,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  */
 @HiltViewModel
 public class ReviewViewModel extends ViewModel {
+    //public Review lastReviewAdded;
     public MutableLiveData<String> errorNewReview = new MutableLiveData<>();
     // Référence vers le repository pour accéder aux données de restaurant et reviews
     private final RestaurantRepository restaurantRepository;
-
+    private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>();
     /**
      * Constructeur du ViewModel.
      *
@@ -36,6 +37,7 @@ public class ReviewViewModel extends ViewModel {
     @Inject
     public ReviewViewModel(RestaurantRepository repository) {
         this.restaurantRepository = repository;
+        reviewsLiveData.setValue(repository.getReviews());
     }
 
     /**
@@ -47,7 +49,7 @@ public class ReviewViewModel extends ViewModel {
      * @return LiveData contenant la liste des avis.
      */
     public LiveData<List<Review>> getReviews() {
-        return restaurantRepository.getReviews();
+        return reviewsLiveData;
     }
 
     /**
@@ -59,6 +61,7 @@ public class ReviewViewModel extends ViewModel {
      * @param review L’objet Review représentant le nouvel avis à ajouter.
      */
     public void addReview(Review review) {
+
         if (review == null) {
             return; // Ne rien faire si review est null
         }
@@ -70,7 +73,9 @@ public class ReviewViewModel extends ViewModel {
         } else if (review.getRate() == 0 || review.getRate() > 5) {
             errorNewReview.setValue("Veuillez attribuer une note entre 1 et 5.");
         } else {
+            //lastReviewAdded= review;
             restaurantRepository.addReview(review);
+            reviewsLiveData.setValue(restaurantRepository.getReviews());
         }
     }
 }

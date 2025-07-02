@@ -101,6 +101,12 @@ public class DetailsFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        detailsViewModel.reloadReviews(); // recharge les avis si des nouveaux ont été ajoutés
+    }
+
     /**
      * Creates and returns the view hierarchy associated with the fragment.
      *
@@ -111,6 +117,8 @@ public class DetailsFragment extends Fragment {
      *                           from a previous saved state as given here.
      * @return Returns the View for the fragment's UI, or null.
      */
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentDetailsBinding.inflate(inflater, container, false); // Binds the layout using view binding.

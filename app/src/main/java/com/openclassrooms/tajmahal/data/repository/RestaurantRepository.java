@@ -32,7 +32,7 @@ public class RestaurantRepository {
     private final RestaurantApi restaurantApi;
 
     // MutableLiveData that holds the list of reviews and allows updates
-    private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>();
+    //private final MutableLiveData<List<Review>> reviewsLiveData = new MutableLiveData<>();
 
     /**
      * Constructs a new instance of {@link RestaurantRepository} with the given {@link RestaurantApi}.
@@ -45,8 +45,8 @@ public class RestaurantRepository {
 
         // Initialiser la MutableLiveData avec la liste actuelle des reviews depuis l'API
         // On crée une nouvelle ArrayList pour pouvoir modifier la liste sans affecter l'originale
-        List<Review> initialReviews = new ArrayList<>(restaurantApi.getReviews());
-        reviewsLiveData.setValue(initialReviews);
+        //List<Review> initialReviews = new ArrayList<>(restaurantApi.getReviews());
+        //reviewsLiveData.setValue(initialReviews);
     }
 
     /**
@@ -68,8 +68,8 @@ public class RestaurantRepository {
      *
      * @return LiveData containing the list of reviews.
      */
-    public LiveData<List<Review>> getReviews() {
-        return reviewsLiveData;
+    public List<Review> getReviews() {
+        return restaurantApi.getReviews();
     }
 
     /**
@@ -78,11 +78,11 @@ public class RestaurantRepository {
      * @param review The new review to add.
      */
     public void addReview(Review review) {
-        List<Review> currentReviews = reviewsLiveData.getValue();
+        /*List<Review> currentReviews = reviewsLiveData.getValue();
         if (currentReviews != null) {
             currentReviews.add(0, review); // Ajout en tête de liste
             reviewsLiveData.setValue(currentReviews); // Notifie les observateurs
-        }
-
+        }*/
+        restaurantApi.addReview(review);
     }
 }
